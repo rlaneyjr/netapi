@@ -1,6 +1,3 @@
-[submodule "netapi/lib/FireCheck"]
-	path = netapi/lib/FireCheck
-	url = git@github.com:Wyko/FireCheck.git
 [submodule "netapi/lib/netapi"]
 	path = netapi/lib/netapi
 	url = https://gitlab.com/the-networkers/netaudithor/netapi
@@ -16,3 +13,6 @@
 [submodule "netapi/lib/carphunter"]
 	path = netapi/lib/carphunter
 	url = https://github.com/jondkelley/carphunter
+[submodule "netapi/lib/FireCheck"]
+	path = netapi/lib/FireCheck
+	url = git@github.com:Wyko/FireCheck.git
