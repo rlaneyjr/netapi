@@ -1,0 +1,17 @@
+loaders:
+  - type: python
+    modules: [linux]
+    search_path: [../netapi/probe]
+processors:
+  - type: pydocmd
+  - type: filter
+    document_only: true
+    exclude_private: true
+  # - type: filter
+  #   expression: not name.startswith("update_")
+  # - type: filter
+  #   expression: not "__" in name
+renderer:
+  type: markdown
+  filename: content/api/api_probe_linux_reference.md
+  render_toc: false

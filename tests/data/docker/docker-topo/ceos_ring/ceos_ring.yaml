@@ -1,0 +1,17 @@
+# Topology definition file to be used with docker-topo
+links:
+  - endpoints: ["Ceos1:eth0", "Ceos2:eth0", "Ceos3:eth0"]
+    driver: bridge
+  - endpoints: ["Ceos1:eth1", "Ceos2:eth1"]
+  - endpoints: ["Ceos1:eth2", "Ceos2:eth2"]
+  - endpoints: ["Ceos2:eth3", "Ceos3:eth3"]
+  - endpoints: ["Ceos2:eth4", "Ceos3:eth4"]
+  - endpoints: ["Ceos1:eth3", "Ceos3:eth1"]
+  - endpoints: ["Ceos1:eth4", "Ceos3:eth2"]
+
+VERSION: 2
+driver: veth
+PREFIX: ring
+CONF_DIR: ./config
+CEOS_IMAGE: ceosimage:latest
+PUBLISH_BASE: 9000

@@ -1,0 +1,28 @@
+loaders:
+  - type: python
+    modules: [__init__]
+    search_path: [../netapi/connector]
+  - type: python
+    modules: [device]
+    search_path: [../netapi/connector]
+processors:
+  - type: pydocmd
+  - type: filter
+    document_only: true
+    exclude_private: true
+  # - type: filter
+  #   expression: not name.startswith("valid_")
+  # - type: filter
+  #   expression: not "Factory" in name
+  - type: filter
+    expression: not name.endswith("_factory")
+  - type: filter
+    expression: not name.startswith("Object")
+  - type: filter
+    expression: not "__" in name
+  - type: filter
+    expression: not "ENTITY" in name
+renderer:
+  type: markdown
+  filename: content/api/api_connector_reference.md
+  render_toc: false

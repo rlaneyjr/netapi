@@ -1,0 +1,28 @@
+# Network details for testing the package
+eos:
+  # CEOS2 which has 2 interfaces set
+  topology:
+    tester: docker-topo
+    topology: ceos_ring
+  devices:
+    ceos1:
+      host: ring_Ceos1
+      user: "lab"
+      password: "lab123"
+      transport: "http"
+    ceos2:
+      host: ring_Ceos2
+      user: "lab"
+      password: "lab123"
+      transport: "http"
+    ceos3:
+      host: ring_Ceos3
+      user: "lab"
+      password: "lab123"
+      transport: "http"
+  test_mapping:
+      test_vlan_obj_get: ceos1
+      test_vlan_obj_enable: ceos1
+      test_vlan_obj_disable: ceos1
+linux-local:
+  host: localhost

@@ -1,0 +1,31 @@
+---
+- hosts: localhost
+  become: true
+  connection: local
+  vars:
+    devices:
+      - {'name': 'ring_Ceos1'}
+      - {'name': 'ring_Ceos2'}
+      - {'name': 'ring_Ceos3'}
+  tasks:
+
+    - name: Retrieve IPs
+      shell: "docker inspect --format '{% raw %}{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}{% endraw %}' {{ item.name }}"
+      register: valor
+      loop: "{{ devices }}"
+
+    #- debug:
+    #    msg: "Device: {{ item.item.name }} == IP: {{ item.stdout }}"
+    #  loop: "{{ valor.results }}"
+    #  loop_control:
+    #    label: "{{ item.item.name }}"
+
+    # TODO: https://gist.github.com/rothgar/8793800
+    - name: Append Alias in Hosts file
+      lineinfile:
+        path: "/etc/hosts"
+        regexp: "{{ item.stdout }}  {{ item.item.name }}"
+        line: "{{ item.stdout }}  {{ item.item.name }}"
+      loop: "{{ valor.results }}"
+      loop_control:
+        label: "{{ item.item.name }}"

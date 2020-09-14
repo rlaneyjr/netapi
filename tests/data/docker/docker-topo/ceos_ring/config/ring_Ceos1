@@ -1,0 +1,35 @@
+hostname ceos1
+!
+username lab secret lab123 privilege 15 role network-admin
+!
+vlan 7
+   name TEST_VLAN
+!
+interface Ethernet1
+   description TO CEOS2 VLAN 7
+   switchport access vlan 7
+!
+interface Ethernet2
+   description TO CEOS2 ROUTED
+   no switchport
+   ip address 7.7.1.1/30
+!
+interface Ethernet3
+!
+interface Ethernet4
+!
+interface Vlan7
+   description TEST_SVI
+   ip address 7.7.7.1/24
+   vrrp 7 priority 200
+   vrrp 7 ip 7.7.7.7
+   vrrp 7 ip 7.7.7.8 secondary
+   vrrp 7 ip 7.7.7.9 secondary
+   vrrp 7 ip 7.7.7.10 secondary
+!
+ip routing
+!
+management api http-commands
+   protocol http
+   no shutdown
+!

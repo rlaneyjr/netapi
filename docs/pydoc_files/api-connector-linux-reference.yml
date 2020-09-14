@@ -1,0 +1,17 @@
+loaders:
+  - type: python
+    modules: [linux]
+    search_path: [../netapi/connector]
+processors:
+  - type: pydocmd
+  - type: filter
+    document_only: true
+    exclude_private: true
+  - type: filter
+    expression: not "transport" in name
+  - type: filter
+    expression: not "__" in name
+renderer:
+  type: markdown
+  filename: content/api/api_connector_linux_reference.md
+  render_toc: false

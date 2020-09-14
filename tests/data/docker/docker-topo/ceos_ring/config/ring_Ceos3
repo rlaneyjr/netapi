@@ -1,0 +1,18 @@
+hostname ceos3
+!
+username lab secret lab123 privilege 15 role network-admin
+!
+interface Ethernet1
+!
+interface Ethernet2
+!
+interface Ethernet3
+!
+interface Ethernet4
+!
+ip routing
+!
+management api http-commands
+   protocol http
+   no shutdown
+!

@@ -1,0 +1,59 @@
+site_name: "NetAPI"
+site_url: https://the-networkers.gitlab.io/netaudithor/netapi-docs
+site_description: "Network API, manipulate your network infrastructure as code"
+site_author: David Flores
+repo_name: netaudithor/netapi
+repo_url: https://gitlab.com/the-networkers/netaudithor/netapi
+
+docs_dir: "content"
+theme:
+  name: material
+  feature:
+    tabs: true
+  palette:
+    primary: "teal"
+    accent: "teal"
+
+markdown_extensions:
+  - markdown.extensions.codehilite:
+      guess_lang: false
+  - markdown_include.include:
+      base_path: docs
+  - toc:
+      permalink: "*"
+      toc_depth: 2-4
+      baselevel: 2
+  - admonition
+  - codehilite
+  - extra
+
+nav:
+  - Overview: index.md
+  # - User Guide:
+  - API Reference:
+      - Net Entities:
+          - Builders and Net Objects: api/api_net_reference.md
+          - EOS: api/api_net_eos_reference.md
+      - Connectors:
+          - Builders and Connector Objects: api/api_connector_reference.md
+          - EOS: api/api_connector_eos_reference.md
+          - Linux: api/api_connector_linux_reference.md
+      - Probes:
+          - Builders and Probe Objects: api/api_probe_reference.md
+          - EOS: api/api_probe_eos_reference.md
+          - IOS: api/api_probe_ios_reference.md
+          - IOS-XE: api/api_probe_xe_reference.md
+          - IOS-XR: api/api_probe_xr_reference.md
+          - NXOS: api/api_probe_nxos_reference.md
+          - JUNOS: api/api_probe_junos_reference.md
+          - Linux: api/api_probe_linux_reference.md
+  - About:
+      - Release Notes: about/changelog.md
+      - License: about/license.md
+
+extra:
+  social:
+    - type: "github"
+      link: "https://github.com/davidban77"
+    - type: "twitter"
+      link: "https://twitter.com/davidban77"

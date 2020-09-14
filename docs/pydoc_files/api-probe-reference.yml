@@ -1,0 +1,28 @@
+loaders:
+  - type: python
+    modules: [__init__]
+    search_path: [../netapi/probe]
+  - type: python
+    modules: [ping]
+    search_path: [../netapi/probe]
+processors:
+  - type: pydocmd
+  - type: filter
+    document_only: true
+    exclude_private: true
+  - type: filter
+    expression: not name.startswith("valid_")
+  - type: filter
+    expression: not "Factory" in name
+  - type: filter
+    expression: not name.endswith("_factory")
+  - type: filter
+    expression: not name.startswith("Object")
+  - type: filter
+    expression: not "__" in name
+  - type: filter
+    expression: not "CommonParser" in name
+renderer:
+  type: markdown
+  filename: content/api/api_probe_reference.md
+  render_toc: false

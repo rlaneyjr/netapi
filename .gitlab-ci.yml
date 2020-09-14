@@ -1,0 +1,184 @@
+# image: registry.gitlab.com/the-networkers/netaudithor/netapi:base-build
+image: python:latest
+
+# variables:
+#   REGISTRY: registry.gitlab.com
+#   CONTAINER_TEST_IMAGE: registry.gitlab.com/the-networkers/netaudithor/netapi/ceos:4.21.2F
+
+# Change pip's cache directory to be inside the project directory since we can
+# only cache local items.
+# variables:
+#     PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+cache:
+  paths:
+    # - .cache/pip
+    - venv/
+  key: deps
+
+before_script:
+  # # - pip install mkdocs
+  # # - apk add -U tzdata
+  # - pip install poetry
+  # - poetry install
+  - python -V
+  - pip install poetry
+  - pip install virtualenv
+  - virtualenv venv
+  - source venv/bin/activate
+
+stages:
+  # - documentation
+  # - chat
+  - local-test
+  # - network-test
+
+# pages:
+#   stage: documentation
+#   script:
+#   - mkdocs build
+#   - mv site public
+#   artifacts:
+#     paths:
+#     - public
+#   only:
+#   - master
+
+
+local-test:
+  stage: local-test
+  script:
+    - poetry config settings.virtualenvs.in-project true
+    - poetry install
+    - poetry run pytest -v tests/
+
+# eos-local-test:
+#   stage: local-test
+#   script:
+#     - poetry run pytest -v tests/ -k eos
+
+# ios-local-test:
+#   stage: local-test
+#   script:
+#     - poetry run pytest -v tests/ -k ios
+
+# xe-local-test:
+#   stage: local-test
+#   script:
+#     - poetry run pytest -v tests/ -k xe
+
+# nxos-local-test:
+#   stage: local-test
+#   script:
+#     - poetry run pytest -v tests/ -k nxos
+
+# xr-local-test:
+#   stage: local-test
+#   script:
+#     - poetry run pytest -v tests/ -k xr
+
+# junos-local-test:
+#   stage: local-test
+#   script:
+#     - poetry run pytest -v tests/ -k junos
+
+# linux-local-test:
+#   stage: local-test
+#   script:
+#     - poetry run pytest -v tests/ -k linux
+
+# network-test-eos:
+#   stage: network-test
+#   image: docker:git
+#   services:
+#     - docker:dind
+#   before_script:
+#     - docker info
+#     - apk update
+#     - apk upgrade
+#     - apk add --no-cache python3
+#     - python3 -m ensurepip && rm -r /usr/lib/python*/ensurepip && pip3 install --upgrade pip setuptools
+#     # - apk add python3 python3-dev py-pip build-base
+#     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+#     - docker image pull $CONTAINER_TEST_IMAGE
+#     - docker image tag $CONTAINER_TEST_IMAGE ceosimage:latest
+#     - pip3 install --upgrade git+https://github.com/networkop/arista-ceos-topo.git
+#     - docker-topo --create tests/data/docker/docker-topo/ceos_ring/ceos_ring.yaml
+#     - docker exec -it ring_Ceos1 Cli
+#     - sleep 120
+#   script:
+#     - echo "This a test"
+
+# network-test-eos:
+#   stage: network-test
+#   image: registry.gitlab.com/the-networkers/netaudithor/netapi/networkci-topo:latest
+#   # image: docker:latest
+#   tags:
+#     - docker
+#     - local
+#     - ubuntu
+#   # variables:
+#   #   DOCKER_DRIVER: vfs
+#   #   DOCKER_HOST: tcp://localhost:2375
+#   services:
+#     - docker:dind
+#   # services:
+#   #   - name: docker:dind
+#   #     entrypoint:
+#   #       - dockerd
+#   before_script:
+#     # - docker-topo --help
+#     # - service docker start
+#     - docker --version
+#     - docker info
+#     # - apk update && apk add python3-dev && apk add git
+#     # - pip3 install netaddr
+#     # - pip3 install jmespath
+#     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $REGISTRY
+#     - docker image pull $CONTAINER_TEST_IMAGE
+#     - docker image tag $CONTAINER_TEST_IMAGE ceosimage:latest
+#     # - pip3 install --upgrade git+https://github.com/networkop/arista-ceos-topo.git
+#     - uname -a
+#     - ls -l tests/data/docker/docker-topo/ceos_ring/
+#     - cat tests/data/docker/docker-topo/ceos_ring/ceos_ring.yaml
+#     - sleep 120
+#     - docker-topo --create tests/data/docker/docker-topo/ceos_ring/ceos_ring.yaml
+#     - sleep 120
+#     - docker exec -it ring_Ceos1 Cli
+#   script:
+#     - echo "This is a test"
+
+# network-test-eos:
+#   stage: network-test
+#   image: ubuntu:latest
+#   # services:
+#   #   - docker:dind
+#   before_script:
+#     # - docker info
+#     - apt-get update
+#     - apt-get -y install curl apt-transport-https ca-certificates software-properties-common gnupg-agent
+#     - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+#     - add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+#     - apt-get update
+#     - apt-get -y install docker-ce docker-ce-cli containerd.io
+#     - apt-get -y install python3 python3-dev python3-pip git
+#     # - apk add python3 python3-dev py-pip build-base
+#     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+#     - service docker start
+#     - sleep 10
+#     - docker image pull $CONTAINER_TEST_IMAGE
+#     - docker image tag $CONTAINER_TEST_IMAGE ceosimage:latest
+#     - pip3 install netaddr
+#     - pip3 install jmespath
+#     - pip3 install --upgrade git+https://github.com/networkop/arista-ceos-topo.git
+#     - docker-topo --create tests/data/docker/docker-topo/ceos_ring/ceos_ring.yaml
+#     - docker exec -it ring_Ceos1 Cli
+#     - sleep 120
+#   script:
+#     - echo "This a test"
+
+# custom-job:
+#   stage: chat
+#   only: [chat]
+#   script:
+#     - echo "Here is a custom-chat-job"

@@ -1,0 +1,2 @@
+class NetApiParseError(Exception):
+    pass
